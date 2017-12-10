@@ -1,7 +1,19 @@
 #include <gtk/gtk.h>
+GtkWidget *cb1,*cb2,*cb3,*cb4;
+
+static void
+button_clicked (GtkButton *button,
+                gpointer   user_data)
+{
+  GtkWindow *window = user_data;	
+  
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(cb1)))
+      g_print ("Java\n");	  	
+}
+
 int main(int argc, char *argv[])
 {
-	GtkWidget *window,*label,*b1,*b2,*grid,*cb1,*cb2,*cb3,*cb4;
+	GtkWidget *window,*label,*b1,*b2,*grid;
 	gtk_init (&argc, &argv);
 
 	window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
@@ -15,8 +27,8 @@ int main(int argc, char *argv[])
 	cb2 = gtk_check_button_new_with_label("Python");
 	cb3 = gtk_check_button_new_with_label("C");
 	cb4 = gtk_check_button_new_with_label("JavaScript");
-
 	b1 = gtk_button_new_with_label ("Learn");
+	//b1 = gtk_link_button_new_with_label("google.com.pe")
 	b2 = gtk_button_new_with_label ("Quit");
 
 
@@ -29,8 +41,10 @@ int main(int argc, char *argv[])
 	gtk_grid_attach  (GTK_GRID(grid),b1,1,3,1,1);
 	gtk_grid_attach  (GTK_GRID(grid),b2,2,3,1,1);
 
-
-	g_signal_connect (window, "destroy", G_CALLBACK (gtk_main_quit),NULL);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cb1), FALSE);
+	g_signal_connect (GTK_BUTTON (b1), "clicked", G_CALLBACK (button_clicked), G_OBJECT (window));
+	g_signal_connect (window, "destroy", G_CALLBACK (gtk_main_quit),NULL); //para poder cerrar la vent.
+//	g_signal_connect (GTK_TOGGLE_BUTTON (cb1), "toggled", G_CALLBACK (toggled_cb), window);	
 	
 	gtk_widget_show_all (window);
 	gtk_main();
