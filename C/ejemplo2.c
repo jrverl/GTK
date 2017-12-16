@@ -1,4 +1,5 @@
 #include <gtk/gtk.h>
+ #include <webkit2/webkit2.h>
 GtkWidget *cb1,*cb2,*cb3,*cb4;
 
 static void
@@ -7,8 +8,19 @@ button_clicked (GtkButton *button,
 {
   GtkWindow *window = user_data;	
   
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(cb1)))
-      g_print ("Java\n");	  	
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(cb1))){
+	 g_print ("Java\n");
+	GtkWidget *webbrowser = Gtk_window_new (GTK_WINDOW_TOP_LEVEL);
+	GtkWidget *scrolerview = Gtk_scroled_window_new (NULL,NULL);
+	GtkWidget *webview = webkit_web_view_new();
+	gtk_container_add(Gtk_container(scrolerview),webview);
+	gtk_container_add(Gtk_container(webbrowser),scrollerview);
+	
+	webkit_web_view_load_uri(WEBKIT_WEB_VIEW(webview),"www.google.com");
+	gtk_window_set_default__size(GTK_WINDOW(webbrowser),800,600);
+	gtk_widget_show_all(webbrowser);
+ }	
+      	  	
 }
 
 int main(int argc, char *argv[])
